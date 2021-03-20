@@ -35,7 +35,9 @@ dependencies {
   implementation("io.vertx:vertx-mysql-client")
   implementation("io.vertx:vertx-web-sstore-cookie")
   implementation("io.vertx:vertx-json-schema")
-  implementation ("io.netty:netty-handler:4.1.27.Final")
+  //implementation ("io.netty:netty-handler:4.1.27.Final")
+  implementation ("io.netty:netty-resolver-dns-native-macos:4.1.60.Final")
+  implementation ("io.netty:netty-all:4.1.60.Final")
 
   //testImplementation("io.vertx:vertx-unit")
   //testImplementation("junit:junit:4.13.1")

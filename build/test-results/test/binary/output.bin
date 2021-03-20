@@ -1,4 +1,7 @@
-)Kry, Livi code test service has started.
-testsss
-
-afterssss
+.Kry, Livi code test service result succeeded.
+$Test verticle_deployed is starting.
+Got a connection from the pool
+,Count of records in services table: 2 rows 
+%User 1 https://vertx.io/get-started/
+User 2 dfsdfs
+#Test verticle_deployed is running.

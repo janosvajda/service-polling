@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.kry.janostest.pollingService.TestMainVerticle" tests="1" skipped="0" failures="0" errors="0" timestamp="2021-03-20T17:44:46" hostname="Janoss-MBP" time="0.209">
+<testsuite name="com.kry.janostest.pollingService.TestMainVerticle" tests="1" skipped="0" failures="0" errors="0" timestamp="2021-03-20T18:21:21" hostname="Janoss-MBP" time="0.55">
   <properties/>
-  <testcase name="verticle_deployed(Vertx, VertxTestContext)" classname="com.kry.janostest.pollingService.TestMainVerticle" time="0.209"/>
-  <system-out><![CDATA[Kry, Livi code test service has started.
-testsss
-afterssss
+  <testcase name="Start a web server on localhost responding to path /service on port 8888" classname="com.kry.janostest.pollingService.TestMainVerticle" time="0.55"/>
+  <system-out><![CDATA[Kry, Livi code test service result succeeded.
+Test verticle_deployed is starting.
+Got a connection from the pool
+Count of records in services table: 2 rows 
+User 1 https://vertx.io/get-started/
+User 2 dfsdfs
+Test verticle_deployed is running.
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
