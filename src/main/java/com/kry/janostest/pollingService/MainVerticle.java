@@ -75,6 +75,7 @@ public class MainVerticle extends AbstractVerticle {
       .createHttpServer()
       .requestHandler(router)
       .listen(PORT, result -> {
+         startPromise.complete();
         if (result.succeeded()) {
           System.out.println("Kry, Livi code test service has started.");
         } else {
