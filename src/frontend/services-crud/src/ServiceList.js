@@ -11,10 +11,14 @@ class ServiceList extends Component {
         super(props);
 
         this.state = {
-            items: []
+            items: this.loadItems()
         };
 
         this.addItem = this.addItem.bind(this);
+    }
+
+    loadItems() {
+        return [{"name":"id","status":"2"},{"name":"url","status":"dfsdfs"}];
     }
 
     addItem(e) {

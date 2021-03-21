@@ -4,3 +4,5 @@ com/kry/janostest/pollingService/Service.java
  com.kry.janostest.pollingService.Service
 com/kry/janostest/pollingService/Starter.java
  com.kry.janostest.pollingService.Starter
+com/kry/janostest/pollingService/Values.java
+ com.kry.janostest.pollingService.Values
