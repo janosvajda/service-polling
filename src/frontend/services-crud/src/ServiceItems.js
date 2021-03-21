@@ -13,21 +13,16 @@ import Box from '@material-ui/core/Box';
 
 class ServiceItems extends Component {
 
-    onDeleteClick(id) {
-        console.log('Delete item: ', id)
-    }
+    constructor(props) {
+        super(props);
+        this.state = {
+            selectedId: null
+        };
+        this.handleChange = this.handleChange.bind(this);
 
-    createService(item) {
-        const self = this;
-        console.log('Item in ServiceItems: ', item)
-        return <div className="itemRow" key={item.id}>
-            <span className="textColumn">{item.url}</span>
-            <span className="buttonColum"><Button color="secondary"
-                                                  onClick={() => console.log('work work')}>Delete</Button></span>
-
-            <span className="buttonColum"><Button color="primary"
-                                                  onClick={() => console.log('work work')}>Start service</Button></span>
-        </div>
+        const handleBack = () => {
+            console.log('PIN333A')
+        };
     }
 
     render() {
@@ -42,6 +37,36 @@ class ServiceItems extends Component {
                 </Box>
             </div>
         );
+    }
+
+    createService(item) {
+        let selectedId = null;
+
+        console.log('Item in ServiceItems: ', item)
+
+        const handleDelete = (id) => {
+            console.log('handleDelete row Id: ', id)
+        };
+
+        const handleStatus = (id) => {
+            console.log('handleStatus row Id: ', id)
+        };
+
+        return <div className="itemRow" key={item.id}>
+            <span className="textColumn">{item.url}</span>
+            <span className="buttonColum"><Button color="secondary"
+                                                  onClick={ ()=>handleDelete(item.id) }
+            >Delete</Button></span>
+
+            <span className="buttonColum"><Button color="primary"
+                                                  onClick={ ()=>handleStatus(item.id) }>Start service</Button></span>
+        </div>
+    }
+
+
+
+    handleChange = () => {
+        console.log('this.selectedId', this);
     }
 };
 
