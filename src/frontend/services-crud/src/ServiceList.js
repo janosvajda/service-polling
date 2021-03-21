@@ -96,14 +96,16 @@ class ServiceList extends Component {
     }
 
     render() {
+
+        //@todo All form's element should be replaced width a Material compontents.
         return (
             <div className="serviceListMain">
                 <div className="header">
                     <form onSubmit={ this.addItem }>
-                        <input ref={ (a) => this._inputElement = a }
+                        <input className="addInput" ref={ (a) => this._inputElement = a }
                                placeholder="Add new service">
                         </input>
-                        <button type="Add">add</button>
+                        <button className="addButton" type="Add">Add</button>
                     </form>
                 </div>
                 <ServiceItems entries={ this.state.items }/>

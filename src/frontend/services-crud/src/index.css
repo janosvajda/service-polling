@@ -6,7 +6,7 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     padding: 50px;
-    background-color: #dcfdfd;
+    background-color: #f6ffff;
 }
 
 code {
@@ -53,4 +53,30 @@ code {
     float: left;
     margin-left: 3px;
     font-size: .8em
+}
+
+.addInput {
+    width: 60%;
+    font-size: 1.1em;
+    background-color: white;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: left;
+    text-decoration: none;
+    display: inline-block;
+    margin-right: 3px;
+    border: 1px dotted #8484b1;
+    color: #282c34;
+}
+
+.addButton {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: .9em;
 }

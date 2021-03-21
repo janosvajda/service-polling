@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
+import Fade from 'react-reveal/Fade';
 
 /**
  * Items in service list component.
@@ -17,7 +18,7 @@ class ServiceItems extends Component {
 
         return (
             <div className="listDiv">
-                <Box width="100%" bgcolor="white.300" p={1} my={0.5}>
+                <Box width="100%" bgcolor="white" p={1} my={0.5}>
                     {listItems}
                 </Box>
             </div>
@@ -37,7 +38,7 @@ class ServiceItems extends Component {
             console.log('handleStatus row Id: ', id)
         };
 
-        return <div className="itemRow" key={item.id}>
+        return <Fade left><div className="itemRow" key={item.id}>
             <span className="textColumn">{item.url}</span>
             <span className="buttonColum"><Button color="secondary"
                                                   onClick={() => handleDelete(item.id)}
@@ -45,7 +46,7 @@ class ServiceItems extends Component {
 
             <span className="buttonColum"><Button color="primary"
                                                   onClick={() => handleStatus(item.id)}>Start service</Button></span>
-        </div>
+        </div></Fade>
     }
 
 
