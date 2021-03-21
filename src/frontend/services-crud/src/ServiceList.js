@@ -11,15 +11,38 @@ class ServiceList extends Component {
         super(props);
 
         this.state = {
-            items: this.loadItems()
+            items: []
         };
 
         this.addItem = this.addItem.bind(this);
     }
 
-    loadItems() {
+    componentDidMount() {
+        fetch("http://localhost:8888/service")
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    console.log('Result of componentDidMount in ServiceList: ', result)
+                    this.setState({
+                        isLoaded: true,
+                        items: result
+                    });
+                },
+                // Note: it's important to handle errors here
+                // instead of a catch() block so that we don't swallow
+                // exceptions from actual bugs in components.
+                (error) => {
+                    this.setState({
+                        isLoaded: true,
+                        error
+                    });
+                }
+            )
+    }
+
+    loadTestItems() {
         return [
-                {"id":"1","url":"https://vertx.io/get-started/","status":"0"},{"id":"2","url":"dfsdfs","status":"0"}
+                {"id":"1","url":"https://test.service1","status":"0"},{"id":"2","url":"https://test.service2","status":"0"}
             ];
     }
 
