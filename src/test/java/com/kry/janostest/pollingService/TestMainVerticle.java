@@ -34,14 +34,14 @@ public class TestMainVerticle {
     }
 
     @Test
-    @DisplayName("Start a web server on localhost responding to path /service on port 8888")
+    @DisplayName("Test of /service endpoint on port 8888")
     @Timeout(value = 10, timeUnit = TimeUnit.SECONDS)
     void verticle_deployed(Vertx vertx, VertxTestContext testContext) throws Throwable {
         System.out.println("Test verticle_deployed is starting.");
         WebClient.create(vertx)
             .get(8888, "localhost", "/service")
             .send(response -> testContext.verify(() -> {
-              
+
                 assertEquals(200, response.result().statusCode());
                 System.out.println("Test verticle_deployed is running.");
 

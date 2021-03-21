@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.kry.janostest.pollingService.TestMainVerticle" tests="1" skipped="0" failures="0" errors="0" timestamp="2021-03-20T18:21:21" hostname="Janoss-MBP" time="0.55">
+<testsuite name="com.kry.janostest.pollingService.TestMainVerticle" tests="1" skipped="0" failures="0" errors="0" timestamp="2021-03-21T01:32:52" hostname="Janoss-MBP" time="0.648">
   <properties/>
-  <testcase name="Start a web server on localhost responding to path /service on port 8888" classname="com.kry.janostest.pollingService.TestMainVerticle" time="0.55"/>
+  <testcase name="Test of /service endpoint on port 8888" classname="com.kry.janostest.pollingService.TestMainVerticle" time="0.648"/>
   <system-out><![CDATA[Kry, Livi code test service result succeeded.
 Test verticle_deployed is starting.
 Got a connection from the pool
