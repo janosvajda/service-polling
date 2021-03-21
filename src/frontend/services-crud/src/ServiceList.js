@@ -18,6 +18,16 @@ class ServiceList extends Component {
     }
 
     componentDidMount() {
+        this.loadData();
+    }
+
+    loadTestItems() {
+        return [
+                {"id":"1","url":"https://test.service1","status":"0"},{"id":"2","url":"https://test.service2","status":"0"}
+            ];
+    }
+
+    loadData() {
         fetch("http://localhost:8888/service")
             .then(res => res.json())
             .then(
@@ -28,9 +38,6 @@ class ServiceList extends Component {
                         items: result
                     });
                 },
-                // Note: it's important to handle errors here
-                // instead of a catch() block so that we don't swallow
-                // exceptions from actual bugs in components.
                 (error) => {
                     this.setState({
                         isLoaded: true,
@@ -38,12 +45,6 @@ class ServiceList extends Component {
                     });
                 }
             )
-    }
-
-    loadTestItems() {
-        return [
-                {"id":"1","url":"https://test.service1","status":"0"},{"id":"2","url":"https://test.service2","status":"0"}
-            ];
     }
 
     addItem(e) {
