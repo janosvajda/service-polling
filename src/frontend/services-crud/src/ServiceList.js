@@ -47,6 +47,22 @@ class ServiceList extends Component {
             )
     }
 
+    saveItem(newItem) {
+        (async () => {
+            const rawResponse = await fetch('http://localhost:8888/service', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(newItem)
+            });
+            const response = await rawResponse.json();
+
+            console.log('Response of saveItem in ServiceList componenet: ', response);
+        })();
+    }
+
     addItem(e) {
         if (this._inputElement.value !== "") {
 
@@ -63,6 +79,10 @@ class ServiceList extends Component {
             });
 
             this._inputElement.value = "";
+
+            console.log('New item: ', newItem)
+            this.saveItem(newItem);
+
         }
 
         e.preventDefault();
