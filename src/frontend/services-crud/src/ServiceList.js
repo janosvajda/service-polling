@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import ServiceItems from "./ServiceItems";
+import Utils from "./Utils"
 
 /**
  * Service List component.
@@ -22,9 +23,14 @@ class ServiceList extends Component {
     }
 
     loadTestItems() {
-        return [
+        let items = [
                 {"id":"1","url":"https://test.service1","status":"0"},{"id":"2","url":"https://test.service2","status":"0"}
             ];
+
+        this.setState({
+            isLoaded: true,
+            items: items
+        });
     }
 
     loadData() {
@@ -64,7 +70,7 @@ class ServiceList extends Component {
     }
 
     addItem(e) {
-        if (this._inputElement.value !== "") {
+        if (this._inputElement.value !== "" && Utils.isValidURL(this._inputElement.value)) {
 
             let newItem = {
                 url: this._inputElement.value,
@@ -82,7 +88,8 @@ class ServiceList extends Component {
 
             console.log('New item: ', newItem)
             this.saveItem(newItem);
-
+        } else {
+            alert('You can save only a valid url.'); //@todo change to material alert.
         }
 
         e.preventDefault();
@@ -94,7 +101,7 @@ class ServiceList extends Component {
                 <div className="header">
                     <form onSubmit={ this.addItem }>
                         <input ref={ (a) => this._inputElement = a }
-                               placeholder="Enter new service name">
+                               placeholder="Add new service">
                         </input>
                         <button type="Add">add</button>
                     </form>

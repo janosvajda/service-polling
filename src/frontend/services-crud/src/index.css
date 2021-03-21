@@ -18,3 +18,39 @@ code {
     display: flex;
     justify-content: center;
 }
+
+.listDiv {
+    width: 90%;
+}
+
+.serviceListMain {
+    width: 90%;
+}
+
+.itemRow {
+    margin: 3px;
+    border: 1px solid darkgrey;
+}
+
+.serviceList {
+    background-color: #cbf8f8;
+    justify-content: center;
+    width: 500px;
+}
+
+.textColumn {
+    width: 64%;
+    height: 20px;
+    float: left;
+    font-size: .8em;
+    margin: 2px;
+    align-content: center;
+}
+
+.buttonColumn {
+    border: 1px solid #478080;
+    height: 20px;
+    float: left;
+    margin-left: 3px;
+    font-size: .8em
+}
