@@ -18,15 +18,18 @@ class ServiceList extends Component {
     }
 
     loadItems() {
-        return [{"name":"id","status":"2"},{"name":"url","status":"dfsdfs"}];
+        return [
+                {"id":"1","url":"https://vertx.io/get-started/","status":"0"},{"id":"2","url":"dfsdfs","status":"0"}
+            ];
     }
 
     addItem(e) {
         if (this._inputElement.value !== "") {
 
             let newItem = {
-                text: this._inputElement.value,
-                key: Date.now()
+                url: this._inputElement.value,
+                id: 0,
+                status: 0,
             };
 
             this.setState((prevState) => {
@@ -45,14 +48,14 @@ class ServiceList extends Component {
         return (
             <div className="serviceListMain">
                 <div className="header">
-                    <form onSubmit={this.addItem}>
-                        <input ref={(a) => this._inputElement = a}
-                               placeholder="enter task">
+                    <form onSubmit={ this.addItem }>
+                        <input ref={ (a) => this._inputElement = a }
+                               placeholder="Enter new service name">
                         </input>
-                        <button type="submit">add</button>
+                        <button type="Add">add</button>
                     </form>
                 </div>
-                <ServiceItems entries={this.state.items}/>
+                <ServiceItems entries={ this.state.items }/>
             </div>
         );
     }

@@ -7,7 +7,7 @@ import React, {Component} from "react";
  */
 class ServiceItems extends Component {
     createService(item) {
-        return <li key={item.key}>{item.text}</li>
+        return <li key={ item.id }>{ item.url }</li>
     }
 
     render() {
@@ -17,7 +17,7 @@ class ServiceItems extends Component {
 
         return (
             <ul className="serviceList">
-                {listItems}
+                { listItems }
             </ul>
         );
     }
