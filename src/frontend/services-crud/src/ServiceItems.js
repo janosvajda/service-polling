@@ -1,8 +1,5 @@
 import React, {Component} from "react";
 import Button from '@material-ui/core/Button';
-import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 
 /**
@@ -13,18 +10,6 @@ import Box from '@material-ui/core/Box';
 
 class ServiceItems extends Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            selectedId: null
-        };
-        this.handleChange = this.handleChange.bind(this);
-
-        const handleBack = () => {
-            console.log('PIN333A')
-        };
-    }
-
     render() {
 
         let serviceEntries = this.props.entries;
@@ -33,7 +18,7 @@ class ServiceItems extends Component {
         return (
             <div className="listDiv">
                 <Box width="100%" bgcolor="white.300" p={1} my={0.5}>
-                        {listItems}
+                    {listItems}
                 </Box>
             </div>
         );
@@ -55,14 +40,13 @@ class ServiceItems extends Component {
         return <div className="itemRow" key={item.id}>
             <span className="textColumn">{item.url}</span>
             <span className="buttonColum"><Button color="secondary"
-                                                  onClick={ ()=>handleDelete(item.id) }
+                                                  onClick={() => handleDelete(item.id)}
             >Delete</Button></span>
 
             <span className="buttonColum"><Button color="primary"
-                                                  onClick={ ()=>handleStatus(item.id) }>Start service</Button></span>
+                                                  onClick={() => handleStatus(item.id)}>Start service</Button></span>
         </div>
     }
-
 
 
     handleChange = () => {

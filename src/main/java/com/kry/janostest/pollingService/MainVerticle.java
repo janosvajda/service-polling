@@ -13,6 +13,7 @@ import io.vertx.mysqlclient.MySQLPool;
 import io.vertx.sqlclient.PoolOptions;
 import io.vertx.sqlclient.Row;
 import io.vertx.sqlclient.RowSet;
+import io.vertx.sqlclient.Tuple;
 
 import java.util.HashMap;
 import java.util.List;
@@ -78,7 +79,7 @@ public class MainVerticle extends AbstractVerticle {
             .requestHandler(router)
             .listen(PORT, result -> {
                 if (result.succeeded()) {
-                    System.out.println("Kry, Livi code test service result succeeded.");
+                    System.out.println("Kry, Livi code test service result's starting succeeded.");
                     startPromise.complete();
                 } else {
                     System.out.println("Kry, Livi code test service's starting has failed..");
@@ -109,7 +110,7 @@ public class MainVerticle extends AbstractVerticle {
                 // All operations execute on the same connection
                 //@todo Pagination must be here.
                 return conn
-                    .query("SELECT id, url, status FROM services LIMIT 0,5")
+                    .query("SELECT id, url, status FROM services")
                     .execute()
                     .onComplete(ar -> {
                         conn.close();
@@ -154,7 +155,23 @@ public class MainVerticle extends AbstractVerticle {
      */
     private void setPostServiceHandler(Router router) {
         router.post("/service").handler(req -> {
+            System.out.println("setPostServiceHandler ");
+
             String url = getUrlFromRequestBody(req);
+            System.out.println("setPostServiceHandler " + url);
+
+            client
+                .preparedQuery("INSERT INTO services (url, status) VALUES (?, ?)")
+                .execute(Tuple.of(url, "0"), ar -> {
+                    if (ar.succeeded()) {
+                        RowSet<Row> rows = ar.result();
+                        System.out.println("Saved: " + rows.rowCount());
+                        responseRequestWithTextOK(req);
+                    } else {
+                        System.out.println("Failure: " + ar.cause().getMessage());
+                        responseRequestWithTextFailed(req);
+                    }
+                });
         });
     }
 
@@ -182,5 +199,11 @@ public class MainVerticle extends AbstractVerticle {
         request.response()
             .putHeader("content-type", "text/plain")
             .end("OK");
+    }
+
+    private void responseRequestWithTextFailed(RoutingContext request) {
+        request.response()
+            .putHeader("content-type", "text/plain")
+            .end("Failed");
     }
 }
