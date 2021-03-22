@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.kry.janostest.pollingService.TestMainVerticle" tests="1" skipped="0" failures="0" errors="0" timestamp="2021-03-21T01:32:52" hostname="Janoss-MBP" time="0.648">
+<testsuite name="com.kry.janostest.pollingService.TestMainVerticle" tests="1" skipped="0" failures="0" errors="0" timestamp="2021-03-22T04:14:29" hostname="Janoss-MBP" time="0.567">
   <properties/>
-  <testcase name="Test of /service endpoint on port 8888" classname="com.kry.janostest.pollingService.TestMainVerticle" time="0.648"/>
-  <system-out><![CDATA[Kry, Livi code test service result succeeded.
+  <testcase name="Test of /service endpoint on port 8888" classname="com.kry.janostest.pollingService.TestMainVerticle" time="0.567"/>
+  <system-out><![CDATA[Kry, Livi code test service result's starting succeeded.
 Test verticle_deployed is starting.
+HashMap Elements: {}
 Got a connection from the pool
-Count of records in services table: 2 rows 
-User 1 https://vertx.io/get-started/
-User 2 dfsdfs
+Count of records in services table: 3 rows 
+User 27 http://localhost:8888/
+User 33 http://localhost:8888/
+User 34 http://localhost:8888/
 Test verticle_deployed is running.
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>

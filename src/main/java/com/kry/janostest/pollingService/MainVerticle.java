@@ -50,6 +50,20 @@ public class MainVerticle extends AbstractVerticle {
 
     final HashMap<Integer, Values> services = new HashMap<>();
 
+    private MySQLPool getDbClient() {
+        MySQLConnectOptions connectOptions = new MySQLConnectOptions()
+            .setPort(MYSQL_PORT)
+            .setHost(MYSQL_HOST)
+            .setDatabase(MYSQL_DATABASE)
+            .setUser(MYSQL_USER)
+            .setPassword(MYSQL_PASSWORD);
+
+        PoolOptions poolOptions = new PoolOptions()
+            .setMaxSize(5);
+
+         return client = MySQLPool.pool(vertx, connectOptions, poolOptions);
+    }
+
     @Override
     public void start(Promise<Void> startPromise) throws Exception {
         Router router = Router.router(vertx);
@@ -59,19 +73,6 @@ public class MainVerticle extends AbstractVerticle {
 
         //Static content routing handler for React's JS files.
         router.route().handler(StaticHandler.create());
-
-        MySQLConnectOptions connectOptions = new MySQLConnectOptions()
-            .setPort(MYSQL_PORT)
-            .setHost(MYSQL_HOST)
-            .setDatabase(MYSQL_DATABASE)
-            .setUser(MYSQL_USER)
-            .setPassword(MYSQL_PASSWORD);
-
-        // Pool options
-        PoolOptions poolOptions = new PoolOptions()
-            .setMaxSize(5);
-
-        client = MySQLPool.pool(vertx, connectOptions, poolOptions);
 
         setRoutes(router);
         vertx
@@ -102,7 +103,13 @@ public class MainVerticle extends AbstractVerticle {
      * @param router Router
      */
     private void setGetServiceHandler(Router router) {
+
+
         router.get("/service").handler(req -> {
+
+            services.clear();
+            System.out.println("HashMap Elements: " + services);
+            client = this.getDbClient();
 
             client.getConnection().compose(conn -> {
                 System.out.println("Got a connection from the pool");
@@ -113,9 +120,10 @@ public class MainVerticle extends AbstractVerticle {
                     .query("SELECT id, url, status FROM services")
                     .execute()
                     .onComplete(ar -> {
-                        conn.close();
+                       // conn.close();
                     });
             }).onComplete(ar -> {
+
                 if (ar.succeeded()) {
                     RowSet<Row> rows = ar.result();
                     System.out.println("Count of records in services table: " + rows.size() + " rows ");
@@ -160,6 +168,8 @@ public class MainVerticle extends AbstractVerticle {
             String url = getUrlFromRequestBody(req);
             System.out.println("setPostServiceHandler " + url);
 
+            client = this.getDbClient();
+
             client
                 .preparedQuery("INSERT INTO services (url, status) VALUES (?, ?)")
                 .execute(Tuple.of(url, "0"), ar -> {
@@ -172,6 +182,7 @@ public class MainVerticle extends AbstractVerticle {
                         responseRequestWithTextFailed(req);
                     }
                 });
+
         });
     }
 
@@ -184,6 +195,7 @@ public class MainVerticle extends AbstractVerticle {
             String id = getIdFromRequestBody(req);
 
             System.out.println("DELETE ITEM" + id);
+            client = this.getDbClient();
 
             client
                 .preparedQuery("DELETE FROM services WHERE id = ? LIMIT 1")
@@ -223,14 +235,24 @@ public class MainVerticle extends AbstractVerticle {
      * @param request RoutingContext
      */
     private void responseRequestWithTextOK(RoutingContext request) {
+
+        JsonObject json = new JsonObject()
+            .put("result", "ok");
+
         request.response()
-            .putHeader("content-type", "text/plain")
-            .end("OK");
+            .putHeader("Content-Type", "application/json; charset=UTF8")
+            .end(json.encodePrettily());
     }
 
+    /**
+     * @param request RoutingContext
+     */
     private void responseRequestWithTextFailed(RoutingContext request) {
+        JsonObject json = new JsonObject()
+            .put("result", "failed");
+
         request.response()
-            .putHeader("content-type", "text/plain")
-            .end("Failed");
+            .putHeader("Content-Type", "application/json; charset=UTF8")
+            .end(json.encodePrettily());
     }
 }

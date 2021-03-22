@@ -70,6 +70,14 @@ class ServiceItems extends React.Component {
 
             const response = await rawResponse.json();
 
+            console.log('Response', response);
+            console.log('Response', response.result);
+            if (response.result === 'ok') {
+                document.getElementById(this.selectedId).remove();
+            } else {
+                alert('Delete failed. Please, try it again.')
+            }
+
             this.selectedId = null;
             console.log('Response of delete item in ServiceItem componenet: ', response);
         })();
@@ -127,8 +135,8 @@ class ServiceItems extends React.Component {
         };
 
         return <Fade left>
-            <div className="itemRow" key={item.id}>
-                <span className="textColumn">{item.url}</span>
+            <div className="itemRow" key={ item.id } id={ item.id }>
+                <span className="textColumn">{ item.url }</span>
                 <span className="buttonColum"><Button color="secondary"
                                                       onClick={() => handleDelete(item.id)}
                 >Delete</Button></span>
