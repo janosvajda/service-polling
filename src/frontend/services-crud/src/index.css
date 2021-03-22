@@ -30,6 +30,9 @@ code {
 .itemRow {
     margin-right: 3px;
     border: 1px solid darkgrey;
+    border-radius: 9px;
+    padding: 3px;
+    height: 59px;
 }
 
 .itemRowStatus {
@@ -63,7 +66,7 @@ code {
 }
 
 .addInput {
-    width: 60%;
+    width: 20%;
     font-size: 1.1em;
     background-color: white;
     border: none;
@@ -88,3 +91,11 @@ code {
     font-size: .9em;
 }
 
+.inputTitle {
+    margin-right: 7px;
+    font-size: medium;
+}
+
+.bolder {
+    font-weight: bolder;
+}

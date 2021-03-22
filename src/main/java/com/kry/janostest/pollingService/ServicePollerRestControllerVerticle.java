@@ -29,6 +29,8 @@ public class ServicePollerRestControllerVerticle extends AbstractVerticle {
 
     public static final String URL_NAME_ID = "id";
 
+    public static final String URL_NAME_TITLE = "title";
+
     public static final String URL_NAME_KEY = "url";
 
     public static final String URL_STATUS_KEY = "status";
@@ -127,7 +129,7 @@ public class ServicePollerRestControllerVerticle extends AbstractVerticle {
                 // All operations execute on the same connection
                 //@todo Pagination must be here.
                 return conn
-                    .query("SELECT id, url, status FROM services")
+                    .query("SELECT id, url, status, title FROM services")
                     .execute()
                     .onComplete(ar -> {
                        // conn.close();
@@ -142,7 +144,7 @@ public class ServicePollerRestControllerVerticle extends AbstractVerticle {
                     for (Row row : rows) {
                         System.out.println("User " + row.getInteger("id") + " " + row.getString("url"));
                         services.put(row.getInteger("id"),
-                            new ValuesOfServiceMap(row.getString("url"), row.getString("status"))
+                            new ValuesOfServiceMap(row.getString("url"), row.getString("status"), row.getString("title"))
                         );
                     }
 
@@ -154,6 +156,7 @@ public class ServicePollerRestControllerVerticle extends AbstractVerticle {
                                 .put(URL_NAME_ID, service.getKey().toString())
                                 .put(URL_NAME_KEY, service.getValue().url)
                                 .put(URL_STATUS_KEY, service.getValue().status)
+                                .put(URL_NAME_TITLE, service.getValue().title)
                         )
                         .collect(Collectors.toList());
                     req.response()
@@ -176,13 +179,14 @@ public class ServicePollerRestControllerVerticle extends AbstractVerticle {
             System.out.println("setPostServiceHandler ");
 
             String url = getUrlFromRequestBody(req);
+            String title = getTitleFromRequestBody(req);
             System.out.println("setPostServiceHandler " + url);
 
             client = this.getDbClient();
 
             client
-                .preparedQuery("INSERT INTO services (url) VALUES (?)")
-                .execute(Tuple.of(url), ar -> {
+                .preparedQuery("INSERT INTO services (url, title, createdAt) VALUES (?, ?, NOW())")
+                .execute(Tuple.of(url, title), ar -> {
                     if (ar.succeeded()) {
                         RowSet<Row> rows = ar.result();
                         System.out.println("Saved: " + rows.rowCount());
@@ -211,7 +215,7 @@ public class ServicePollerRestControllerVerticle extends AbstractVerticle {
             client = this.getDbClient();
 
             client
-                .preparedQuery("UPDATE services SET url=? WHERE id=?")
+                .preparedQuery("UPDATE services SET url=?, modifiedAt=NOW(), status='QUEUEING' WHERE id=?")
                 .execute(Tuple.of(url, id), ar -> {
                     if (ar.succeeded()) {
                         RowSet<Row> rows = ar.result();
@@ -269,6 +273,15 @@ public class ServicePollerRestControllerVerticle extends AbstractVerticle {
     private String getIdFromRequestBody(RoutingContext request) {
         JsonObject jsonBody = request.getBodyAsJson();
         return jsonBody.getString(URL_NAME_ID);
+    }
+
+    /**
+     * @param request RoutingContext
+     * @return
+     */
+    private String getTitleFromRequestBody(RoutingContext request) {
+        JsonObject jsonBody = request.getBodyAsJson();
+        return jsonBody.getString(URL_NAME_TITLE);
     }
 
     /**

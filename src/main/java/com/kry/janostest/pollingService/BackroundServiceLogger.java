@@ -38,7 +38,7 @@ public class BackroundServiceLogger {
         System.out.println(currentDateTime);
 
         client
-            .preparedQuery("UPDATE services SET status = ? WHERE id = ?")
+            .preparedQuery("UPDATE services SET status = ?, modifiedAt=NOW() WHERE id = ?")
             .execute(Tuple.of(status, id), ar -> {
                 if (ar.succeeded()) {
                     System.out.println("Log saved");

@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React from "react";
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
 import Fade from 'react-reveal/Fade';
@@ -9,12 +9,10 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import TextField from '@material-ui/core/TextField';
 import Utils from "./Utils"
-import { makeStyles } from '@material-ui/core/styles';
 
 /**
  * Items in service list component.
  *
- * @author Janos Vajda
  */
 class ServiceItems extends React.Component {
 
@@ -161,6 +159,7 @@ class ServiceItems extends React.Component {
         let serviceEntries = this.props.entries;
         let listItems = serviceEntries.map(this.createService);
 
+        //@todo Dialogs should go to a separated component.
         return (
             <div className="listDiv">
                 <Box width="100%" bgcolor="white" p={1} my={0.5}>
@@ -227,7 +226,7 @@ class ServiceItems extends React.Component {
         console.log('Item in ServiceItems: ', item)
 
         if (item.status === null || item.status === '') {
-            item.status = 'NOT CHECKED';
+            item.status = 'QUEUEING';
         }
 
         const handleDelete = (id) => {
@@ -245,6 +244,7 @@ class ServiceItems extends React.Component {
 
         return <Fade left>
             <div className="itemRow" key={item.id} id={item.id}>
+                <span className="textColumn bolder">{item.title}</span>
                 <span className="textColumn">{item.url}</span>
                 <span className="itemRowStatus">{item.status}</span>
                 <span className="buttonColum"><Button color="secondary"

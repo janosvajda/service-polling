@@ -59,10 +59,17 @@ class ServiceList extends Component {
     }
 
     addItem(e) {
-        if (this._inputElement.value !== "" && Utils.isValidURL(this._inputElement.value)) {
+
+        if (this._inputElementTitle.value === '' ) {
+            alert('Nama of the service is required.');
+            return;
+        }
+
+        if (this._inputElementUrl.value !== "" && Utils.isValidURL(this._inputElementUrl.value)) {
 
             let newItem = {
-                url: this._inputElement.value,
+                title: this._inputElementTitle.value,
+                url: this._inputElementUrl.value,
                 id: 0,
                 status: null,
             };
@@ -73,12 +80,13 @@ class ServiceList extends Component {
                 };
             });
 
-            this._inputElement.value = "";
+            this._inputElementTitle.value = "";
+            this._inputElementUrl.value = "";
 
             console.log('New item: ', newItem)
             this.saveItem(newItem);
         } else {
-            alert('You can save only a valid url.'); //@todo change to material alert.
+            alert('You can add only a valid url.'); //@todo change to material alert.
         }
 
         e.preventDefault();
@@ -91,8 +99,12 @@ class ServiceList extends Component {
             <div className="serviceListMain">
                 <div className="header">
                     <form onSubmit={this.addItem}>
-                        <input className="addInput" ref={(a) => this._inputElement = a}
-                               placeholder="Add new service">
+                        <span className="inputTitle">Add new service:</span>
+                        <input className="addInput" ref={(a) => this._inputElementTitle = a}
+                               placeholder="Name of the service...">
+                        </input>
+                        <input className="addInput" ref={(a) => this._inputElementUrl = a}
+                               placeholder="Url of the service...">
                         </input>
                         <button className="addButton" type="Add">Add</button>
                     </form>
