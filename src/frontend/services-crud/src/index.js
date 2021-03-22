@@ -5,9 +5,7 @@ import reportWebVitals from './reportWebVitals';
 import ServiceList from "./ServiceList";
 
 ReactDOM.render(
-  <React.StrictMode>
-      <ServiceList/>
-  </React.StrictMode>,
+    <ServiceList/>,
   document.getElementById('root')
 );
 
