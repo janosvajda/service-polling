@@ -16,7 +16,7 @@ public class BackgroundServicePoller {
 
     private final int SERVICE_STATUS_CODE_OK = 200;
 
-    public Future<List<String>> pollServices(Map<Integer, Values> services, Vertx vertx, BackroundServiceLogger backroundServiceLogger, MySQLPool client) {
+    public Future<List<String>> pollServices(Map<Integer, ValuesOfServiceMap> services, Vertx vertx, BackroundServiceLogger backroundServiceLogger, MySQLPool client) {
 
         services.forEach((id, value) -> {
             WebClient.create(vertx).getAbs(value.url).send(result -> {

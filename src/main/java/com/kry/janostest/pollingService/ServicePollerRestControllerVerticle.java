@@ -58,7 +58,7 @@ public class ServicePollerRestControllerVerticle extends AbstractVerticle {
 
     private MySQLPool client;
 
-    final HashMap<Integer, Values> services = new HashMap<>();
+    final HashMap<Integer, ValuesOfServiceMap> services = new HashMap<>();
 
     private MySQLPool getDbClient() {
         MySQLConnectOptions connectOptions = new MySQLConnectOptions()
@@ -142,7 +142,7 @@ public class ServicePollerRestControllerVerticle extends AbstractVerticle {
                     for (Row row : rows) {
                         System.out.println("User " + row.getInteger("id") + " " + row.getString("url"));
                         services.put(row.getInteger("id"),
-                            new Values(row.getString("url"), row.getString("status"))
+                            new ValuesOfServiceMap(row.getString("url"), row.getString("status"))
                         );
                     }
 

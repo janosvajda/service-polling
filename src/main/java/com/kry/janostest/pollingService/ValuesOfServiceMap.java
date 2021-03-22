@@ -1,10 +1,10 @@
 package com.kry.janostest.pollingService;
 
-public class Values {
+public class ValuesOfServiceMap {
     public final String url;
     public final String status;
 
-    public Values(final String url, final String status) {
+    public ValuesOfServiceMap(final String url, final String status) {
         this.url = url;
         this.status = status;
     }

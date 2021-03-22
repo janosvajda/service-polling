@@ -9,6 +9,7 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import TextField from '@material-ui/core/TextField';
 import Utils from "./Utils"
+import { makeStyles } from '@material-ui/core/styles';
 
 /**
  * Items in service list component.
@@ -190,7 +191,10 @@ class ServiceItems extends React.Component {
                     </DialogActions>
                 </Dialog>
 
-                <Dialog open={this.state.openEdit} onClose={this.handleCloseEditDialog} aria-labelledby="form-dialog-title">
+                <Dialog open={this.state.openEdit}
+                        fullWidth={ true }
+                        onClose={this.handleCloseEditDialog}
+                        aria-labelledby="form-dialog-title">
                     <DialogTitle id="form-dialog-title">Amend URL</DialogTitle>
                     <DialogContent>
                         <DialogContentText>
