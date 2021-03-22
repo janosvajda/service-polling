@@ -179,7 +179,25 @@ public class MainVerticle extends AbstractVerticle {
      * @param router Router
      */
     private void setPostDeleteServiceHandler(Router router) {
-        router.post("/delete").handler(req -> {
+        router.delete("/service").handler(req -> {
+
+            String id = getIdFromRequestBody(req);
+
+            System.out.println("DELETE ITEM" + id);
+
+            client
+                .preparedQuery("DELETE FROM services WHERE id = ? LIMIT 1")
+                .execute(Tuple.of(id), ar -> {
+                    if (ar.succeeded()) {
+                        RowSet<Row> rows = ar.result();
+                        System.out.println("Deleted: " + rows.rowCount());
+                        responseRequestWithTextOK(req);
+                    } else {
+                        System.out.println("Failure: " + ar.cause().getMessage());
+                        responseRequestWithTextFailed(req);
+                    }
+                });
+
         });
     }
 
@@ -190,6 +208,15 @@ public class MainVerticle extends AbstractVerticle {
     private String getUrlFromRequestBody(RoutingContext request) {
         JsonObject jsonBody = request.getBodyAsJson();
         return jsonBody.getString(URL_REQUEST_KEY);
+    }
+
+    /**
+     * @param request RoutingContext
+     * @return
+     */
+    private String getIdFromRequestBody(RoutingContext request) {
+        JsonObject jsonBody = request.getBodyAsJson();
+        return jsonBody.getString(URL_NAME_ID);
     }
 
     /**

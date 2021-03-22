@@ -13,7 +13,6 @@ import DialogTitle from "@material-ui/core/DialogTitle";
  *
  * @author Janos Vajda
  */
-
 class ServiceItems extends React.Component {
 
 
@@ -22,6 +21,9 @@ class ServiceItems extends React.Component {
         this.state = {
             open: false
         };
+
+        this.selectedId = null;
+
         this.createService = this.createService.bind(this);
     }
 
@@ -45,6 +47,7 @@ class ServiceItems extends React.Component {
 
     handleAgree = () => {
         console.log("Delete");
+        this.deleteItem();
         this.handleClose();
     };
 
@@ -52,6 +55,25 @@ class ServiceItems extends React.Component {
         console.log("Cancel deleting.");
         this.handleClose();
     };
+
+    deleteItem() {
+
+        (async () => {
+            const rawResponse = await fetch('http://localhost:8888/service', {
+                method: 'DELETE',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({'id': this.selectedId})
+            });
+
+            const response = await rawResponse.json();
+
+            this.selectedId = null;
+            console.log('Response of delete item in ServiceItem componenet: ', response);
+        })();
+    }
 
     render() {
 
@@ -96,6 +118,7 @@ class ServiceItems extends React.Component {
 
         const handleDelete = (id) => {
             console.log('handleDelete row Id: ', id);
+            this.selectedId = id;
             this.openDialog();
         };
 

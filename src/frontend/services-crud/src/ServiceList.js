@@ -21,7 +21,7 @@ class ServiceList extends Component {
     componentDidMount() {
         this.loadData();
     }
-    
+
     loadData() {
         fetch("http://localhost:8888/service")
             .then(res => res.json())
