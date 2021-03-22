@@ -24,14 +24,21 @@ code {
 }
 
 .serviceListMain {
-    width: 90%;
+    width: 93%;
 }
 
 .itemRow {
-    margin: 3px;
+    margin-right: 3px;
     border: 1px solid darkgrey;
 }
 
+.itemRowStatus {
+    margin-right: 3px;
+    font-weight: bold;
+    font-size: .8em;
+    width: 50px;
+    border: 1px solid darkgrey;
+}
 .serviceList {
     background-color: #cbf8f8;
     justify-content: center;

@@ -26,33 +26,33 @@ class ServiceItems extends React.Component {
         this.createService = this.createService.bind(this);
     }
 
-    openDialog() {
+    openDeleteDialog() {
         this.setState(state => ({
             open: true
         }));
     }
 
-    handleClickOpen = () => {
+    handleClickOpenDeleteDialog = () => {
         this.setState(state => ({
             open: true
         }));
     };
 
-    handleClose = () => {
+    handleCloseDeleteDialog = () => {
         this.setState(state => ({
             open: false
         }));
     };
 
-    handleAgree = () => {
+    handleAgreeDeleteDialog = () => {
         console.log("Delete");
         this.deleteItem();
-        this.handleClose();
+        this.handleCloseDeleteDialog();
     };
 
-    handleDisagree = () => {
+    handleDisagreeDeleteDialog = () => {
         console.log("Cancel deleting.");
-        this.handleClose();
+        this.handleCloseDeleteDialog();
     };
 
     deleteItem() {
@@ -93,7 +93,7 @@ class ServiceItems extends React.Component {
 
                 <Dialog
                     open={this.state.open}
-                    onClose={this.handleClose}
+                    onClose={this.handleCloseDeleteDialog}
                     aria-labelledby="alert-dialog-title"
                     aria-describedby="alert-dialog-description"
                 >
@@ -106,10 +106,10 @@ class ServiceItems extends React.Component {
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={this.handleDisagree} color="primary">
+                        <Button onClick={this.handleDisagreeDeleteDialog} color="primary">
                             No
                         </Button>
-                        <Button onClick={this.handleAgree} color="primary" autoFocus>
+                        <Button onClick={this.handleAgreeDeleteDialog} color="primary" autoFocus>
                             Yes
                         </Button>
                     </DialogActions>
@@ -121,27 +121,32 @@ class ServiceItems extends React.Component {
     createService(item) {
         console.log('Item in ServiceItems: ', item)
 
+        if (item.status === null || item.status === '') {
+            item.status = 'NOT CHECKED';
+        }
+
         const handleDelete = (id) => {
             console.log('handleDelete row Id: ', id);
             this.selectedId = id;
-            this.openDialog();
+            this.openDeleteDialog();
         };
 
         const handleStatus = (id) => {
             console.log('handleStatus row Id: ', id)
             this.selectedId = id;
-            this.openDialog();
+            this.openDeleteDialog();
         };
 
         return <Fade left>
             <div className="itemRow" key={ item.id } id={ item.id }>
                 <span className="textColumn">{ item.url }</span>
+                <span className="itemRowStatus">{ item.status }</span>
                 <span className="buttonColum"><Button color="secondary"
                                                       onClick={() => handleDelete(item.id)}
                 >Delete</Button></span>
 
                 <span className="buttonColum"><Button color="primary"
-                                                      onClick={() => handleStatus(item.id)}>Start service</Button></span>
+                                                      onClick={() => handleStatus(item.id)}>Edit URL</Button></span>
             </div>
         </Fade>
     }

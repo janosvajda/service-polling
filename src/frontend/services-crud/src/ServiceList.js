@@ -64,7 +64,7 @@ class ServiceList extends Component {
             let newItem = {
                 url: this._inputElement.value,
                 id: 0,
-                status: 0,
+                status: null,
             };
 
             this.setState((prevState) => {
