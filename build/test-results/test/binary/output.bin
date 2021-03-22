@@ -2,8 +2,7 @@
 $Test verticle_deployed is starting.
 HashMap Elements: {}
 Got a connection from the pool
-,Count of records in services table: 3 rows 
+,Count of records in services table: 2 rows 
 User 27 http://localhost:8888/
 User 33 http://localhost:8888/
-User 34 http://localhost:8888/
 #Test verticle_deployed is running.

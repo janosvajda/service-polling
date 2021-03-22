@@ -1,2 +1,4 @@
 com/kry/janostest/pollingService/TestMainVerticle.java
  com.kry.janostest.pollingService.TestMainVerticle
+com/kry/janostest/pollingService/ServicePoolingRestVerticleTest.java
+ com.kry.janostest.pollingService.ServicePoolingRestVerticleTest
