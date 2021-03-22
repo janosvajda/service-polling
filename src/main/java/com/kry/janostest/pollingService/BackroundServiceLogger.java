@@ -3,21 +3,12 @@ package com.kry.janostest.pollingService;
 import io.vertx.core.AsyncResult;
 import io.vertx.core.Handler;
 import io.vertx.core.Vertx;
-import io.vertx.core.buffer.Buffer;
-import io.vertx.core.file.AsyncFile;
 import io.vertx.core.file.FileSystem;
-import io.vertx.core.file.OpenOptions;
-import io.vertx.core.json.JsonObject;
 import io.vertx.mysqlclient.MySQLPool;
-import io.vertx.sqlclient.Row;
-import io.vertx.sqlclient.RowSet;
 import io.vertx.sqlclient.Tuple;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class BackroundServiceLogger {
 
@@ -52,27 +43,8 @@ public class BackroundServiceLogger {
                 if (ar.succeeded()) {
                     System.out.println("Log saved");
                 } else {
-                    System.out.println("Log saving failure: " + ar.cause().getMessage()); }
-            });
-
-
-    }
-
-    private void save(JsonObject json) {
-        fileSystem.open(SERVICES_FILE_NAME, new OpenOptions().setAppend(true), result -> {
-            if (result.succeeded()) {
-                AsyncFile file = result.result();
-                Buffer buff;
-                if (json.isEmpty()) {
-                    buff = Buffer.buffer("");
-                } else {
-                    buff = Buffer.buffer(json.toString() + System.lineSeparator());
+                    System.out.println("Log saving failure: " + ar.cause().getMessage());
                 }
-                file.write(buff);
-                file.close();
-            } else {
-                System.err.println("Failed to open file");
-            }
-        });
+            });
     }
 }
