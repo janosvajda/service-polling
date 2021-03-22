@@ -15,7 +15,6 @@ import DialogTitle from "@material-ui/core/DialogTitle";
  */
 class ServiceItems extends React.Component {
 
-
     constructor(props) {
         super(props);
         this.state = {
@@ -70,8 +69,6 @@ class ServiceItems extends React.Component {
 
             const response = await rawResponse.json();
 
-            console.log('Response', response);
-            console.log('Response', response.result);
             if (response.result === 'ok') {
                 document.getElementById(this.selectedId).remove();
             } else {
@@ -79,7 +76,7 @@ class ServiceItems extends React.Component {
             }
 
             this.selectedId = null;
-            console.log('Response of delete item in ServiceItem componenet: ', response);
+
         })();
     }
 
@@ -132,6 +129,8 @@ class ServiceItems extends React.Component {
 
         const handleStatus = (id) => {
             console.log('handleStatus row Id: ', id)
+            this.selectedId = id;
+            this.openDialog();
         };
 
         return <Fade left>

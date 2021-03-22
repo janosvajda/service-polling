@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
  * ServicePoolingRestVerticle class of the polling service test.
  *
  **/
-public class ServicePoolingRestVerticle extends AbstractVerticle {
+public class ServicePollerRestControllerVerticle extends AbstractVerticle {
 
 
     public static final String URL_NAME_ID = "id";
@@ -32,6 +32,7 @@ public class ServicePoolingRestVerticle extends AbstractVerticle {
 
     public static final String URL_STATUS_KEY = "status";
 
+    //@todo All DB connection data should come from a config. This is not secure because these data never should be pushed to Git or any other version controlling system.
     private static final int PORT = 8888;
 
     private static final String URL_REQUEST_KEY = "url";
@@ -45,6 +46,14 @@ public class ServicePoolingRestVerticle extends AbstractVerticle {
     private static final String MYSQL_USER = "root";
 
     private static final String MYSQL_PASSWORD = "";
+
+    private static final int MILLISECONDS = 1000;
+
+    private static final int BACKGROUND_CHECKING_INTERVAL_SEC = 20; //20 seconds @todo this should be configurable
+
+    private BackgroundServicePoller backgroundPoller = new BackgroundServicePoller();
+
+    private BackroundServiceLogger backroundServiceLogger = new BackroundServiceLogger();
 
     private MySQLPool client;
 
@@ -73,6 +82,9 @@ public class ServicePoolingRestVerticle extends AbstractVerticle {
 
         //Static content routing handler for React's JS files.
         router.route().handler(StaticHandler.create());
+
+        vertx.setPeriodic(MILLISECONDS * BACKGROUND_CHECKING_INTERVAL_SEC, periodicId ->
+            backgroundPoller.pollServices(services, vertx, backroundServiceLogger));
 
         setRoutes(router);
         vertx
@@ -103,14 +115,10 @@ public class ServicePoolingRestVerticle extends AbstractVerticle {
      * @param router Router
      */
     private void setGetServiceHandler(Router router) {
-
-
         router.get("/service").handler(req -> {
-
             services.clear();
             System.out.println("HashMap Elements: " + services);
             client = this.getDbClient();
-
             client.getConnection().compose(conn -> {
                 System.out.println("Got a connection from the pool");
 

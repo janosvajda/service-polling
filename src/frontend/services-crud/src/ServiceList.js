@@ -90,14 +90,14 @@ class ServiceList extends Component {
         return (
             <div className="serviceListMain">
                 <div className="header">
-                    <form onSubmit={ this.addItem }>
-                        <input className="addInput" ref={ (a) => this._inputElement = a }
+                    <form onSubmit={this.addItem}>
+                        <input className="addInput" ref={(a) => this._inputElement = a}
                                placeholder="Add new service">
                         </input>
                         <button className="addButton" type="Add">Add</button>
                     </form>
                 </div>
-                <ServiceItems entries={ this.state.items }/>
+                <ServiceItems entries={this.state.items}/>
             </div>
         );
     }

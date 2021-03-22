@@ -1,8 +1,12 @@
-com/kry/janostest/pollingService/ServicePoolingRestVerticle.java
- com.kry.janostest.pollingService.ServicePoolingRestVerticle
+com/kry/janostest/pollingService/BackgroundServicePoller.java
+ com.kry.janostest.pollingService.BackgroundServicePoller
+com/kry/janostest/pollingService/BackroundServiceLogger.java
+ com.kry.janostest.pollingService.BackroundServiceLogger
 com/kry/janostest/pollingService/Service.java
  com.kry.janostest.pollingService.Service
 com/kry/janostest/pollingService/Starter.java
  com.kry.janostest.pollingService.Starter
 com/kry/janostest/pollingService/Values.java
  com.kry.janostest.pollingService.Values
+com/kry/janostest/pollingService/ServicePollerRestControllerVerticle.java
+ com.kry.janostest.pollingService.ServicePollerRestControllerVerticle

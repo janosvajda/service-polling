@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(VertxExtension.class)
-public class ServicePoolingRestVerticleTest{
+public class ServicePollerRestControllerVerticleTest {
 
     Vertx vertx = Vertx.vertx();
 
@@ -24,7 +24,7 @@ public class ServicePoolingRestVerticleTest{
     void deploy_verticle(Vertx vertx, VertxTestContext testContext) {
 
         //vertx.deployVerticle(new MainVerticle(), testContext.succeeding(id -> testContext.completeNow()));
-        Vertx.vertx().deployVerticle(new ServicePoolingRestVerticle(), testContext.succeeding(id -> testContext.completeNow()));
+        Vertx.vertx().deployVerticle(new ServicePollerRestControllerVerticle(), testContext.succeeding(id -> testContext.completeNow()));
     }
 
     @Test
