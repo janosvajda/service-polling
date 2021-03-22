@@ -7,6 +7,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
+
 /**
  * Items in service list component.
  *
@@ -14,7 +15,6 @@ import DialogTitle from "@material-ui/core/DialogTitle";
  */
 
 class ServiceItems extends React.Component {
-
 
 
     constructor(props) {
@@ -34,7 +34,8 @@ class ServiceItems extends React.Component {
     handleClickOpen = () => {
         this.setState(state => ({
             open: true
-        }));    };
+        }));
+    };
 
     handleClose = () => {
         this.setState(state => ({
@@ -60,17 +61,17 @@ class ServiceItems extends React.Component {
         return (
             <div className="listDiv">
                 <Box width="100%" bgcolor="white" p={1} my={0.5}>
-                    { listItems }
+                    {listItems}
                 </Box>
 
                 <Dialog
-                    open={ this.state.open }
+                    open={this.state.open}
                     onClose={this.handleClose}
                     aria-labelledby="alert-dialog-title"
                     aria-describedby="alert-dialog-description"
                 >
                     <DialogTitle id="alert-dialog-title">
-                        { "Delete" }
+                        {"Delete"}
                     </DialogTitle>
                     <DialogContent>
                         <DialogContentText id="alert-dialog-description">
@@ -102,15 +103,17 @@ class ServiceItems extends React.Component {
             console.log('handleStatus row Id: ', id)
         };
 
-        return <Fade left><div className="itemRow" key={item.id}>
-            <span className="textColumn">{item.url}</span>
-            <span className="buttonColum"><Button color="secondary"
-                                                  onClick={() => handleDelete(item.id)}
-            >Delete</Button></span>
+        return <Fade left>
+            <div className="itemRow" key={item.id}>
+                <span className="textColumn">{item.url}</span>
+                <span className="buttonColum"><Button color="secondary"
+                                                      onClick={() => handleDelete(item.id)}
+                >Delete</Button></span>
 
-            <span className="buttonColum"><Button color="primary"
-                                                  onClick={() => handleStatus(item.id)}>Start service</Button></span>
-        </div></Fade>
+                <span className="buttonColum"><Button color="primary"
+                                                      onClick={() => handleStatus(item.id)}>Start service</Button></span>
+            </div>
+        </Fade>
     }
 
 

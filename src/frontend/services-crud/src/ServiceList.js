@@ -21,18 +21,7 @@ class ServiceList extends Component {
     componentDidMount() {
         this.loadData();
     }
-
-    loadTestItems() {
-        let items = [
-                {"id":"1","url":"https://test.service1","status":"0"},{"id":"2","url":"https://test.service2","status":"0"}
-            ];
-
-        this.setState({
-            isLoaded: true,
-            items: items
-        });
-    }
-
+    
     loadData() {
         fetch("http://localhost:8888/service")
             .then(res => res.json())
