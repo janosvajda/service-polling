@@ -123,47 +123,45 @@ public class ServicePollerRestControllerVerticle extends AbstractVerticle {
         router.get("/service").handler(req -> {
             services.clear();
             System.out.println("HashMap Elements: " + services);
-            client = this.getDbClient();
-            client.getConnection().compose(conn -> {
-                return conn
-                    .query("SELECT id, url, status, title FROM services") //@todo Pagination (LIMIT) must be here.
-                    .execute()
-                    .onComplete(ar -> {
-                        System.out.println("List data");
-                        if (ar.succeeded()) {
-                            RowSet<Row> rows = ar.result();
-                            System.out.println("Count of records in services table: " + rows.size() + " rows ");
+            this.getDbClient().getConnection().compose(conn -> conn
+                .query("SELECT id, url, status, title FROM services") //@todo Pagination (LIMIT) must be here.
+                .execute()
+                .onComplete(ar -> {
+                    System.out.println("List data");
+                    if (ar.succeeded()) {
+                        RowSet<Row> rows = ar.result();
+                        System.out.println("Count of records in services table: " + rows.size() + " rows ");
 
-                            for (Row row : rows) {
-                                System.out.println("User " + row.getInteger("id") + " " + row.getString("url"));
-                                services.put(row.getInteger("id"),
-                                    new ValuesOfServiceMap(row.getString("url"), row.getString("status"), row.getString("title"))
-                                );
-                            }
-
-                            List<JsonObject> jsonServices = services
-                                .entrySet()
-                                .stream()
-                                .map(service ->
-                                    new JsonObject()
-                                        .put(URL_NAME_ID, service.getKey().toString())
-                                        .put(URL_NAME_KEY, service.getValue().url)
-                                        .put(URL_STATUS_KEY, service.getValue().status)
-                                        .put(URL_NAME_TITLE, service.getValue().title)
-                                )
-                                .collect(Collectors.toList());
-                            req.response()
-                                .putHeader("content-type", "application/json")
-                                .end(new JsonArray(jsonServices).encode());
-                        } else {
-                            System.out.println("Something went wrong " + ar.cause().getMessage());
+                        for (Row row : rows) {
+                            System.out.println("User " + row.getInteger("id") + " " + row.getString("url"));
+                            services.put(row.getInteger("id"),
+                                new ValuesOfServiceMap(row.getString("url"), row.getString("status"), row.getString("title"))
+                            );
                         }
-                    });
-            });
+
+                        List<JsonObject> jsonServices = services
+                            .entrySet()
+                            .stream()
+                            .map(service ->
+                                new JsonObject()
+                                    .put(URL_NAME_ID, service.getKey().toString())
+                                    .put(URL_NAME_KEY, service.getValue().url)
+                                    .put(URL_STATUS_KEY, service.getValue().status)
+                                    .put(URL_NAME_TITLE, service.getValue().title)
+                            )
+                            .collect(Collectors.toList());
+                        req.response()
+                            .putHeader("content-type", "application/json")
+                            .end(new JsonArray(jsonServices).encode());
+                    } else {
+                        System.out.println("Something went wrong " + ar.cause().getMessage());
+                    }
+                }));
         });
     }
 
     /**
+     * POST method - create new record.
      * @param router Router
      */
     private void setPostServiceHandler(Router router) {
@@ -174,9 +172,11 @@ public class ServicePollerRestControllerVerticle extends AbstractVerticle {
             String title = getTitleFromRequestBody(req);
             System.out.println("setPostServiceHandler " + url);
 
-            client = this.getDbClient();
+            if (!validateRequest(req, "0", url, title)) {
+                return;
+            }
 
-            client
+            this.getDbClient()
                 .preparedQuery("INSERT INTO services (url, title, createdAt) VALUES (?, ?, NOW())")
                 .execute(Tuple.of(url, title), ar -> {
                     if (ar.succeeded()) {
@@ -192,6 +192,7 @@ public class ServicePollerRestControllerVerticle extends AbstractVerticle {
     }
 
     /**
+     * PUT method - modify record.
      * @param router Router
      */
     private void setPutServiceHandler(Router router) {
@@ -204,9 +205,11 @@ public class ServicePollerRestControllerVerticle extends AbstractVerticle {
             System.out.println("setPutServiceHandler " + url);
             System.out.println("setPutServiceHandler " + id);
 
-            client = this.getDbClient();
+            if (!validateRequest(req, id, url, title)) {
+                return;
+            }
 
-            client
+            this.getDbClient()
                 .preparedQuery("UPDATE services SET url=?, title=?, modifiedAt=NOW(), status='QUEUEING' WHERE id=?")
                 .execute(Tuple.of(url, title, id), ar -> {
                     if (ar.succeeded()) {
@@ -221,15 +224,22 @@ public class ServicePollerRestControllerVerticle extends AbstractVerticle {
         });
     }
 
+
     /**
+     * DELETE method - delete record.
      * @param router Router
      */
     private void setPostDeleteServiceHandler(Router router) {
         router.delete("/service").handler(req -> {
             String id = getIdFromRequestBody(req);
             System.out.println("DELETE ITEM" + id);
-            client = this.getDbClient();
-            client
+
+            if (id.isEmpty()) {
+                responseRequestWithCustomMessageFailed(req, "ID is required");
+                return;
+            }
+
+            this.getDbClient()
                 .preparedQuery("DELETE FROM services WHERE id = ? LIMIT 1")
                 .execute(Tuple.of(id), ar -> {
                     if (ar.succeeded()) {
@@ -294,5 +304,44 @@ public class ServicePollerRestControllerVerticle extends AbstractVerticle {
         request.response()
             .putHeader("Content-Type", "application/json; charset=UTF8")
             .end(json.encodePrettily());
+    }
+
+    /**
+     * @param request RoutingContext
+     */
+    private void responseRequestWithCustomMessageFailed(RoutingContext request, String errorMessage) {
+        JsonObject json = new JsonObject()
+            .put("result", errorMessage);
+
+        request.response()
+            .putHeader("Content-Type", "application/json; charset=UTF8")
+            .end(json.encodePrettily());
+    }
+
+    /**
+     * @param request
+     * @param id
+     * @param url
+     * @param title
+     * @return
+     */
+    private Boolean validateRequest(RoutingContext request, String id, String url, String title) {
+
+        if (id.isEmpty()) {
+            responseRequestWithCustomMessageFailed(request, "ID is required.");
+            return false;
+        }
+
+        if (url.isEmpty()) {
+            responseRequestWithCustomMessageFailed(request, "URL is required.");
+            return false;
+        }
+
+        if (title.isEmpty()) {
+            responseRequestWithCustomMessageFailed(request, "Title is required.");
+            return false;
+        }
+
+        return true;
     }
 }
