@@ -109,6 +109,7 @@ public class ServicePollerRestControllerVerticle extends AbstractVerticle {
         router.route("/").handler(StaticHandler.create());
         setGetServiceHandler(router);
         setPostServiceHandler(router);
+        setPutServiceHandler(router);
         setPostDeleteServiceHandler(router);
     }
 
@@ -182,6 +183,36 @@ public class ServicePollerRestControllerVerticle extends AbstractVerticle {
             client
                 .preparedQuery("INSERT INTO services (url) VALUES (?)")
                 .execute(Tuple.of(url), ar -> {
+                    if (ar.succeeded()) {
+                        RowSet<Row> rows = ar.result();
+                        System.out.println("Saved: " + rows.rowCount());
+                        responseRequestWithTextOK(req);
+                    } else {
+                        System.out.println("Failure: " + ar.cause().getMessage());
+                        responseRequestWithTextFailed(req);
+                    }
+                });
+
+        });
+    }
+
+    /**
+     * @param router Router
+     */
+    private void setPutServiceHandler(Router router) {
+        router.put("/service").handler(req -> {
+            System.out.println("setPutServiceHandler ");
+
+            String url = getUrlFromRequestBody(req);
+            String id = getIdFromRequestBody(req);
+            System.out.println("setPutServiceHandler " + url);
+            System.out.println("setPutServiceHandler " + id);
+
+            client = this.getDbClient();
+
+            client
+                .preparedQuery("UPDATE services SET url=? WHERE id=?")
+                .execute(Tuple.of(url, id), ar -> {
                     if (ar.succeeded()) {
                         RowSet<Row> rows = ar.result();
                         System.out.println("Saved: " + rows.rowCount());
