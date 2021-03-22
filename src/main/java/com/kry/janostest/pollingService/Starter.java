@@ -3,12 +3,10 @@ package com.kry.janostest.pollingService;
 import io.vertx.core.Vertx;
 
 /**
- * Launcher of MainVerticle.
- *
- * @author Janos Vajda
+ * Launcher of ServicePoolingRestVerticle.
  */
 public class Starter {
   public static void main(String[] args) {
-    Vertx.vertx().deployVerticle(new MainVerticle());
+    Vertx.vertx().deployVerticle(new ServicePoolingRestVerticle());
   }
 }

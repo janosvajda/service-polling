@@ -20,11 +20,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Main Verticle class of the polling service test.
+ * ServicePoolingRestVerticle class of the polling service test.
  *
- * @author Janos Vajda
- */
-public class MainVerticle extends AbstractVerticle {
+ **/
+public class ServicePoolingRestVerticle extends AbstractVerticle {
+
 
     public static final String URL_NAME_ID = "id";
 

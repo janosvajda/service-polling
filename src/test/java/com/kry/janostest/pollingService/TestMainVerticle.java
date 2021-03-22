@@ -24,7 +24,7 @@ public class TestMainVerticle {
     void deploy_verticle(Vertx vertx, VertxTestContext testContext) {
 
         //vertx.deployVerticle(new MainVerticle(), testContext.succeeding(id -> testContext.completeNow()));
-        Vertx.vertx().deployVerticle(new MainVerticle(), testContext.succeeding(id -> testContext.completeNow()));
+        Vertx.vertx().deployVerticle(new ServicePoolingRestVerticle(), testContext.succeeding(id -> testContext.completeNow()));
     }
 
     @Test
