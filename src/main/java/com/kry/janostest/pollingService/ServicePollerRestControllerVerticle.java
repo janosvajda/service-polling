@@ -73,7 +73,7 @@ public class ServicePollerRestControllerVerticle extends AbstractVerticle {
         PoolOptions poolOptions = new PoolOptions()
             .setMaxSize(5);
 
-         return client = MySQLPool.pool(vertx, connectOptions, poolOptions);
+        return client = MySQLPool.pool(vertx, connectOptions, poolOptions);
     }
 
     @Override
@@ -125,49 +125,40 @@ public class ServicePollerRestControllerVerticle extends AbstractVerticle {
             System.out.println("HashMap Elements: " + services);
             client = this.getDbClient();
             client.getConnection().compose(conn -> {
-                System.out.println("Got a connection from the pool");
-
-                // All operations execute on the same connection
-                //@todo Pagination must be here.
                 return conn
-                    .query("SELECT id, url, status, title FROM services")
+                    .query("SELECT id, url, status, title FROM services") //@todo Pagination (LIMIT) must be here.
                     .execute()
                     .onComplete(ar -> {
-                       // conn.close();
+                        System.out.println("List data");
+                        if (ar.succeeded()) {
+                            RowSet<Row> rows = ar.result();
+                            System.out.println("Count of records in services table: " + rows.size() + " rows ");
+
+                            for (Row row : rows) {
+                                System.out.println("User " + row.getInteger("id") + " " + row.getString("url"));
+                                services.put(row.getInteger("id"),
+                                    new ValuesOfServiceMap(row.getString("url"), row.getString("status"), row.getString("title"))
+                                );
+                            }
+
+                            List<JsonObject> jsonServices = services
+                                .entrySet()
+                                .stream()
+                                .map(service ->
+                                    new JsonObject()
+                                        .put(URL_NAME_ID, service.getKey().toString())
+                                        .put(URL_NAME_KEY, service.getValue().url)
+                                        .put(URL_STATUS_KEY, service.getValue().status)
+                                        .put(URL_NAME_TITLE, service.getValue().title)
+                                )
+                                .collect(Collectors.toList());
+                            req.response()
+                                .putHeader("content-type", "application/json")
+                                .end(new JsonArray(jsonServices).encode());
+                        } else {
+                            System.out.println("Something went wrong " + ar.cause().getMessage());
+                        }
                     });
-            }).onComplete(ar -> {
-
-                if (ar.succeeded()) {
-                    RowSet<Row> rows = ar.result();
-                    System.out.println("Count of records in services table: " + rows.size() + " rows ");
-
-                    //Iterate through the dataset
-                    for (Row row : rows) {
-                        System.out.println("User " + row.getInteger("id") + " " + row.getString("url"));
-                        services.put(row.getInteger("id"),
-                            new ValuesOfServiceMap(row.getString("url"), row.getString("status"), row.getString("title"))
-                        );
-                    }
-
-                    List<JsonObject> jsonServices = services
-                        .entrySet()
-                        .stream()
-                        .map(service ->
-                            new JsonObject()
-                                .put(URL_NAME_ID, service.getKey().toString())
-                                .put(URL_NAME_KEY, service.getValue().url)
-                                .put(URL_STATUS_KEY, service.getValue().status)
-                                .put(URL_NAME_TITLE, service.getValue().title)
-                        )
-                        .collect(Collectors.toList());
-                    req.response()
-                        .putHeader("content-type", "application/json")
-                        .end(new JsonArray(jsonServices).encode());
-
-
-                } else {
-                    System.out.println("Something went wrong " + ar.cause().getMessage());
-                }
             });
         });
     }
