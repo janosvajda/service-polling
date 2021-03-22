@@ -23,9 +23,9 @@ import java.util.stream.Collectors;
 /**
  * ServicePoolingRestVerticle class of the polling service test.
  *
+ * @author Janos Vajda
  **/
 public class ServicePollerRestControllerVerticle extends AbstractVerticle {
-
 
     public static final String URL_NAME_ID = "id";
 
@@ -42,13 +42,13 @@ public class ServicePollerRestControllerVerticle extends AbstractVerticle {
 
     private static final Integer MYSQL_PORT = 3306;
 
-    private static final String MYSQL_HOST = "localhost";
+    private static final String MYSQL_HOST = "localhost"; //@todo this should come from a secret local config.
 
-    private static final String MYSQL_DATABASE = "service_pooling";
+    private static final String MYSQL_DATABASE = "service_pooling"; //@todo this should come from a secret local config.
 
-    private static final String MYSQL_USER = "root";
+    private static final String MYSQL_USER = "root"; //@todo this should come from a secret local config.
 
-    private static final String MYSQL_PASSWORD = "";
+    private static final String MYSQL_PASSWORD = ""; //@todo this should come from a secret local config.
 
     private static final int MILLISECONDS = 1000;
 
@@ -86,6 +86,7 @@ public class ServicePollerRestControllerVerticle extends AbstractVerticle {
         //Static content routing handler for React's JS files.
         router.route().handler(StaticHandler.create());
 
+        //It is starting the checking of services.
         vertx.setPeriodic(MILLISECONDS * BACKGROUND_CHECKING_INTERVAL_SEC, periodicId ->
             backgroundPoller.pollServices(services, vertx, backroundServiceLogger, getDbClient()));
 
@@ -196,7 +197,6 @@ public class ServicePollerRestControllerVerticle extends AbstractVerticle {
                         responseRequestWithTextFailed(req);
                     }
                 });
-
         });
     }
 
@@ -235,12 +235,9 @@ public class ServicePollerRestControllerVerticle extends AbstractVerticle {
      */
     private void setPostDeleteServiceHandler(Router router) {
         router.delete("/service").handler(req -> {
-
             String id = getIdFromRequestBody(req);
-
             System.out.println("DELETE ITEM" + id);
             client = this.getDbClient();
-
             client
                 .preparedQuery("DELETE FROM services WHERE id = ? LIMIT 1")
                 .execute(Tuple.of(id), ar -> {
@@ -253,7 +250,6 @@ public class ServicePollerRestControllerVerticle extends AbstractVerticle {
                         responseRequestWithTextFailed(req);
                     }
                 });
-
         });
     }
 

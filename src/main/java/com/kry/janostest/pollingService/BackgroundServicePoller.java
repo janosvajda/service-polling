@@ -14,7 +14,7 @@ public class BackgroundServicePoller {
 
     private final String SERVICE_STATUS_OK = "OK";
 
-    private final int SERVICE_STATUS_CODE_OK = 200;
+    private final int SERVICE_STATUS_CODE_OK = 200; //http code of successful responses.
 
     public Future<List<String>> pollServices(Map<Integer, ValuesOfServiceMap> services, Vertx vertx, BackroundServiceLogger backroundServiceLogger, MySQLPool client) {
 
@@ -32,8 +32,6 @@ public class BackgroundServicePoller {
                 }
             });
         });
-
         return Future.succeededFuture();
     }
-
 }

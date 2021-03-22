@@ -1,7 +1,5 @@
 package com.kry.janostest.pollingService;
 
-import io.vertx.core.AsyncResult;
-import io.vertx.core.Handler;
 import io.vertx.core.Vertx;
 import io.vertx.core.file.FileSystem;
 import io.vertx.mysqlclient.MySQLPool;
@@ -18,15 +16,6 @@ public class BackroundServiceLogger {
 
     public BackroundServiceLogger(Vertx vertx) {
         fileSystem = vertx.fileSystem();
-    }
-
-    public void serviceFileExists(Handler<AsyncResult<Boolean>> resultHandler) {
-        fileSystem.exists(SERVICES_FILE_NAME, resultHandler);
-    }
-
-
-    public void createServicesFile(Handler<AsyncResult<Void>> resultHandler) {
-        fileSystem.createFile(SERVICES_FILE_NAME, resultHandler);
     }
 
     public void log(Integer id, String url, String status, MySQLPool client) {
