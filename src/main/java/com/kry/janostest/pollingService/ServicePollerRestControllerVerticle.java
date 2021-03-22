@@ -2,6 +2,7 @@ package com.kry.janostest.pollingService;
 
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Promise;
+import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.Router;
@@ -53,7 +54,7 @@ public class ServicePollerRestControllerVerticle extends AbstractVerticle {
 
     private BackgroundServicePoller backgroundPoller = new BackgroundServicePoller();
 
-    private BackroundServiceLogger backroundServiceLogger = new BackroundServiceLogger();
+    private BackroundServiceLogger backroundServiceLogger = new BackroundServiceLogger(Vertx.vertx());
 
     private MySQLPool client;
 
@@ -84,7 +85,7 @@ public class ServicePollerRestControllerVerticle extends AbstractVerticle {
         router.route().handler(StaticHandler.create());
 
         vertx.setPeriodic(MILLISECONDS * BACKGROUND_CHECKING_INTERVAL_SEC, periodicId ->
-            backgroundPoller.pollServices(services, vertx, backroundServiceLogger));
+            backgroundPoller.pollServices(services, vertx, backroundServiceLogger, getDbClient()));
 
         setRoutes(router);
         vertx
@@ -140,7 +141,7 @@ public class ServicePollerRestControllerVerticle extends AbstractVerticle {
                     for (Row row : rows) {
                         System.out.println("User " + row.getInteger("id") + " " + row.getString("url"));
                         services.put(row.getInteger("id"),
-                            new Values(row.getString("url"), row.getInteger("status").toString())
+                            new Values(row.getString("url"), row.getString("status"))
                         );
                     }
 
@@ -179,8 +180,8 @@ public class ServicePollerRestControllerVerticle extends AbstractVerticle {
             client = this.getDbClient();
 
             client
-                .preparedQuery("INSERT INTO services (url, status) VALUES (?, ?)")
-                .execute(Tuple.of(url, "0"), ar -> {
+                .preparedQuery("INSERT INTO services (url) VALUES (?)")
+                .execute(Tuple.of(url), ar -> {
                     if (ar.succeeded()) {
                         RowSet<Row> rows = ar.result();
                         System.out.println("Saved: " + rows.rowCount());
