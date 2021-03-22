@@ -42,13 +42,13 @@ public class ServicePollerRestControllerVerticle extends AbstractVerticle {
 
     private static final Integer MYSQL_PORT = 3306;
 
-    private static final String MYSQL_HOST = "localhost"; //@todo This should come from a secret local config.
+    private static final String MYSQL_HOST = "localhost";
 
-    private static final String MYSQL_DATABASE = "service_pooling"; //@todo This should come from a secret local config.
+    private static final String MYSQL_DATABASE = "service_polling";
 
-    private static final String MYSQL_USER = "root"; //@todo This should come from a secret local config.
+    private static final String MYSQL_USER = "root";
 
-    private static final String MYSQL_PASSWORD = ""; //@todo This should come from a secret local config.
+    private static final String MYSQL_PASSWORD = "";
 
     private static final int MILLISECONDS = 1000;
 
@@ -96,10 +96,10 @@ public class ServicePollerRestControllerVerticle extends AbstractVerticle {
             .requestHandler(router)
             .listen(PORT, result -> {
                 if (result.succeeded()) {
-                    System.out.println("Kry, Livi code test service result's starting succeeded.");
+                    System.out.println("Kry code test service result's starting succeeded.");
                     startPromise.complete();
                 } else {
-                    System.out.println("Kry, Livi code test service's starting has failed..");
+                    System.out.println("Kry code test service's starting has failed.");
                     startPromise.fail("Failed");
                 }
             });
