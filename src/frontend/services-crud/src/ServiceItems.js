@@ -134,7 +134,7 @@ class ServiceItems extends React.Component {
             this.selectedUrl = '';
             this.selectedTitle = '';
 
-            window.document.location.reload(); //@todo this should be more user firendly. it should just chaange values in the array.
+            window.document.location.reload(); //@todo This should be more sophisticated. It should just chaange the values in the array.
         })();
 
     }

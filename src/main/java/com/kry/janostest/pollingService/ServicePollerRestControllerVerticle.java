@@ -42,21 +42,21 @@ public class ServicePollerRestControllerVerticle extends AbstractVerticle {
 
     private static final Integer MYSQL_PORT = 3306;
 
-    private static final String MYSQL_HOST = "localhost"; //@todo this should come from a secret local config.
+    private static final String MYSQL_HOST = "localhost"; //@todo This should come from a secret local config.
 
-    private static final String MYSQL_DATABASE = "service_pooling"; //@todo this should come from a secret local config.
+    private static final String MYSQL_DATABASE = "service_pooling"; //@todo This should come from a secret local config.
 
-    private static final String MYSQL_USER = "root"; //@todo this should come from a secret local config.
+    private static final String MYSQL_USER = "root"; //@todo This should come from a secret local config.
 
-    private static final String MYSQL_PASSWORD = ""; //@todo this should come from a secret local config.
+    private static final String MYSQL_PASSWORD = ""; //@todo This should come from a secret local config.
 
     private static final int MILLISECONDS = 1000;
 
-    private static final int BACKGROUND_CHECKING_INTERVAL_SEC = 20; //20 seconds @todo this should be configurable
+    private static final int BACKGROUND_CHECKING_INTERVAL_SEC = 20; //20 seconds @todo This should be configurable
 
     private BackgroundServicePoller backgroundPoller = new BackgroundServicePoller();
 
-    private BackroundServiceLogger backroundServiceLogger = new BackroundServiceLogger(Vertx.vertx());
+    private BackroundServiceLogger backroundServiceLogger = new BackroundServiceLogger();
 
     private MySQLPool client;
 
