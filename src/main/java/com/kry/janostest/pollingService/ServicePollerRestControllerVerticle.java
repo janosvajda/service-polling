@@ -208,6 +208,7 @@ public class ServicePollerRestControllerVerticle extends AbstractVerticle {
             System.out.println("setPutServiceHandler ");
 
             String url = getUrlFromRequestBody(req);
+            String title = getTitleFromRequestBody(req);
             String id = getIdFromRequestBody(req);
             System.out.println("setPutServiceHandler " + url);
             System.out.println("setPutServiceHandler " + id);
@@ -215,8 +216,8 @@ public class ServicePollerRestControllerVerticle extends AbstractVerticle {
             client = this.getDbClient();
 
             client
-                .preparedQuery("UPDATE services SET url=?, modifiedAt=NOW(), status='QUEUEING' WHERE id=?")
-                .execute(Tuple.of(url, id), ar -> {
+                .preparedQuery("UPDATE services SET url=?, title=?, modifiedAt=NOW(), status='QUEUEING' WHERE id=?")
+                .execute(Tuple.of(url, title, id), ar -> {
                     if (ar.succeeded()) {
                         RowSet<Row> rows = ar.result();
                         System.out.println("Saved: " + rows.rowCount());
@@ -226,7 +227,6 @@ public class ServicePollerRestControllerVerticle extends AbstractVerticle {
                         responseRequestWithTextFailed(req);
                     }
                 });
-
         });
     }
 

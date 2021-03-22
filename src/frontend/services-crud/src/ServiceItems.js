@@ -24,13 +24,18 @@ class ServiceItems extends React.Component {
         };
 
         this.selectedId = null;
-        this.selectedUrl = ''
+        this.selectedUrl = '';
+        this.selectedTitle = '';
         this.createService = this.createService.bind(this);
         this.render = this.render.bind(this);
     }
 
-    handleTextFieldChange = (e) => {
+    handleUrlFieldChange = (e) => {
         this.selectedUrl = e.target.value;
+    }
+
+    handleTitleFieldChange = (e) => {
+        this.selectedTitle = e.target.value;
     }
 
     openDeleteDialog() {
@@ -93,9 +98,15 @@ class ServiceItems extends React.Component {
 
     editItem() {
         console.log('this.selectedUrl in editItem', this.selectedUrl);
+        console.log('this.selectedTitle in editItem', this.selectedTitle);
 
         if (this.selectedUrl === '' || !Utils.isValidURL(this.selectedUrl)) {
             alert('Not valid or empty URL.')
+            return;
+        }
+
+        if (this.selectedTitle === '') {
+            alert('Name is a required field.')
             return;
         }
 
@@ -110,7 +121,7 @@ class ServiceItems extends React.Component {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({'id': this.selectedId, 'url': this.selectedUrl})
+                body: JSON.stringify({'id': this.selectedId, 'url': this.selectedUrl, 'title': this.selectedTitle})
             });
 
             const response = await rawResponse.json();
@@ -121,10 +132,9 @@ class ServiceItems extends React.Component {
 
             this.selectedId = null;
             this.selectedUrl = '';
+            this.selectedTitle = '';
 
             window.document.location.reload(); //@todo this should be more user firendly. it should just chaange values in the array.
-
-
         })();
 
     }
@@ -194,18 +204,27 @@ class ServiceItems extends React.Component {
                         fullWidth={ true }
                         onClose={this.handleCloseEditDialog}
                         aria-labelledby="form-dialog-title">
-                    <DialogTitle id="form-dialog-title">Amend URL</DialogTitle>
+                    <DialogTitle id="form-dialog-title">Edit</DialogTitle>
                     <DialogContent>
                         <DialogContentText>
-                           Amending of the selected URL.
+                           Amending of selected service.
                         </DialogContentText>
+                        <TextField
+                            autoFocus
+                            margin="dense"
+                            id="titleField"
+                            label="Name"
+                            defaultValue={this.selectedTitle}
+                            onChange={this.handleTitleFieldChange}
+                            fullWidth
+                        />
                         <TextField
                             autoFocus
                             margin="dense"
                             id="urlField"
                             label="URL"
                             defaultValue={this.selectedUrl}
-                            onChange={this.handleTextFieldChange}
+                            onChange={this.handleUrlFieldChange}
                             fullWidth
                         />
                     </DialogContent>
@@ -235,10 +254,11 @@ class ServiceItems extends React.Component {
             this.openDeleteDialog();
         };
 
-        const handleEdit = (id, url) => {
+        const handleEdit = (id, url, title) => {
             console.log('handleStatus row Id: ', id)
             this.selectedId = id;
             this.selectedUrl = url;
+            this.selectedTitle = title;
             this.openEditDialog();
         };
 
@@ -252,7 +272,7 @@ class ServiceItems extends React.Component {
                 >Delete</Button></span>
 
                 <span className="buttonColum"><Button color="primary"
-                                                      onClick={() => handleEdit(item.id, item.url)}>Amend URL</Button></span>
+                                                      onClick={() => handleEdit(item.id, item.url, item.title)}>Edit</Button></span>
             </div>
         </Fade>
     }

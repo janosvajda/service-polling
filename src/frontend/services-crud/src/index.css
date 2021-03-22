@@ -33,7 +33,8 @@ code {
     border-radius: 9px;
     padding: 3px;
     height: 59px;
-    background-image: linear-gradient(to bottom right, #f4fdfd, #4d808d);
+    background-image: linear-gradient(to bottom right, #ffffff, #b6dee9);
+    margin-bottom: 2px;
 }
 
 .itemRowStatus {
@@ -42,7 +43,6 @@ code {
     font-size: .8em;
     width: 50px;
     border: 1px solid darkgrey;
-    margin-bottom: 2px;
 }
 .serviceList {
     background-color: #cbf8f8;
