@@ -114,6 +114,7 @@ class ServiceItems extends React.Component {
 
         console.log('Amended items', this.selectedId, this.selectedUrl);
 
+        //@todo URLS should not be hard-coded in frontend code. It should come from an environment config.
         (async () => {
             const rawResponse = await fetch('http://localhost:8888/service', {
                 method: 'PUT',
@@ -141,6 +142,7 @@ class ServiceItems extends React.Component {
 
     deleteItem() {
 
+        //@todo URLS should not be hard-coded in frontend code. It should come from an environment config.
         (async () => {
             const rawResponse = await fetch('http://localhost:8888/service', {
                 method: 'DELETE',

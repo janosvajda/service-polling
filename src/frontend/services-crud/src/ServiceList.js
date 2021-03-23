@@ -23,6 +23,8 @@ class ServiceList extends Component {
     }
 
     loadData() {
+
+        //@todo URLS should not be hard-coded in frontend code. It should come from an environment config.
         fetch("http://localhost:8888/service")
             .then(res => res.json())
             .then(
@@ -43,6 +45,8 @@ class ServiceList extends Component {
     }
 
     saveItem(newItem) {
+
+        //@todo URLS should not be hard-coded in frontend code. It should come from an environment config.
         (async () => {
             const rawResponse = await fetch('http://localhost:8888/service', {
                 method: 'POST',
