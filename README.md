@@ -51,7 +51,7 @@ UI shows their statuses and allows all CRUD functionality.
    (you have to reload the page to see results) (**yes**, script reload the page in each 30 second and re-checks services)
 1. We want to have informative and nice looking animations on
    add/remove services (**yes**, there is a basic animation on UI when data has been added/removed)
-1. Simultaneous writes sometimes causes strange behaviour (**Not fully**, This was a bigger problem If I used a file system but MySQL can handle this. Of course, there can be more layers for this but I did not add any extra load balancer etc.)
+1. Simultaneous writes sometimes causes strange behaviour (**Not fully**, This was a bigger problem If there would be used a file system but MySQL can handle this. Of course, there can be more layers for this but I did not add any extra load balancer etc.)
 1. Protect the poller from misbehaving services (for example answering
    really slowly) (**Yes**, I used for this WebClient and Future + Periodic)
 1. URL Validation ("sdgf" is probably not a valid service) (**Yes**, UI shows an error if URL is not valid and back-end also does extra validation as users should not be able to save empty data.)
