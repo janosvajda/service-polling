@@ -2,11 +2,10 @@
 
 Service polling app.
 
-It has two parts: 
+The source code has two parts: 
 
-1. front-end (React)
-1. back-end (Java, Vert.x, Gradle, MySQL)
-
+1. Front-end (React)
+1. Back-end (Java, Vert.x, Gradle, MySQL)
 
 ## Installation
 
