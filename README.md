@@ -60,8 +60,7 @@ UI shows their statuses and allows all CRUD functionality.
    another user (**Nope**, I did not create user and session management.)
 
 ### Personal note
-This was first Vert.x and React web project in my life as I have never used them before. I spent a bit more on this test than 4 hours and I was struggling with the configuration of the project as I had never configured Vert.x/React project.
-
+This was the first Vert.x and React web project in my life as I have never used them before, so I spent a bit more on this test than 4 hours and I was struggling with the configuration of the project as I had never configured Vert.x/React project.
 I really enjoyed working with Vert.x and I was amazed at how effective and quick it is.
 
 I added @todo's in the code where I thought things should be improved or changed or refactored.
