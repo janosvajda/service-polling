@@ -1,4 +1,4 @@
-## KRY software developer test no code: service-polling 
+## service-polling 
 
 Service polling app.
 
