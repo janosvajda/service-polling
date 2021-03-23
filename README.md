@@ -37,12 +37,14 @@ User can add/modify/delete services name + URL
 Back-end checks services every 20 seconds and writes/modifies their status in the DB. Their status can be OK, FAIL and QUEUING (this is when the endpoint has not been checked or if it was modified).
 UI shows their statuses and allows all CRUD functionality.
 
-### Extra requirements
+### Basic requirements
 
 1. A user needs to be able to add a new service with URL, a name (yes)
 1. Added services have to be kept when the server is restarted (yes, all data is saved into MySQL)
 1. Present whenever a service was added and when the last change was
    made (yes, DateTime values of created at and modified at are in MySQL table)
+
+### Extra requirements
 
 1. Full create/update/delete functionality for services (**yes**, CRUD functionally is done)
 1. The results from the poller are not automatically shown to the user
