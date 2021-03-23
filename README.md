@@ -9,9 +9,11 @@ The source code has two parts:
 
 ## Installation
 
+1. git clone https://github.com/janosvajda/service-polling.git
 1. You should create a MySQL/MariaDb database and table. You can find the SQL command in `migration/init.sql`
 1. You can change the DB connection details. MySQL port, user, password details are in `ServicePollerRestControllerVerticle.java`
 1. Now, you should to the frontend directory `src/services-crud` and run `npm install` and `npm run build` You can read the frontend parts its own Readme in this file: `src/frontend/services-crud/README.md`
+1. That's all now you can start `Starter.java` from _IntelliJ_. Right click on Starter.java and Run and open the UI in browser by this URL: http://localhost:8888
 
 Db details in for point 2 (from line 43. in ServicePollerRestControllerVerticle.java):
 
@@ -25,10 +27,6 @@ Db details in for point 2 (from line 43. in ServicePollerRestControllerVerticle.
 
     private static final String MYSQL_PASSWORD = "";
 
-
-That's all now you can start `Starter.java` from IntelliJ. Right click on Starter.java and Run and open the UI in browser by this URL:
-
-http://localhost:8888
 
 Integration test is in ServicePollerRestControllerVerticleTest.java
 
