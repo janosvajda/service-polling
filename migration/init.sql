@@ -11,4 +11,4 @@ CREATE TABLE `services` (
                             `modifiedAt` datetime DEFAULT NULL,
                             PRIMARY KEY (`id`),
                             UNIQUE KEY `id` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
