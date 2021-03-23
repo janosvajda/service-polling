@@ -1,5 +1,3 @@
-import ServiceList from "./ServiceList";
-
 class Utils {
     static isValidURL(input) {
         const pattern = '^(https?:\\/\\/)?' + // protocol
