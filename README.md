@@ -51,7 +51,7 @@ UI shows their statuses and allows all CRUD functionality.
 1. The results from the poller are not automatically shown to the user
    (you have to reload the page to see results) (**Yes**, script reload the page in each 30 second and re-checks services)
 1. We want to have informative and nice looking animations on
-   add/remove services (**Yes**, there is a basic animation on UI when data has been added/removed)
+   add/remove services (**Not fully**, there is an animation on UI when data has been adding/loading data.)
 1. Simultaneous writes sometimes causes strange behaviour (**Not fully**, This was a bigger problem If there would be used a file system but MySQL can handle this. Of course, there can be more layers for this but I did not add any extra load balancer etc.)
 1. Protect the poller from misbehaving services (for example answering
    really slowly) (**Yes**, I used for this WebClient and Future + Periodic)
@@ -61,3 +61,5 @@ UI shows their statuses and allows all CRUD functionality.
 
 ### Personal note
 This was first Vert.x and React web project in my life as I had never used them before. I really enjoyed working with Vert.x and I was amazed at how effective and quick it is.
+
+I added @todo's in the code where I thought things should be improved or changed or refactored.
