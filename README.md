@@ -10,8 +10,8 @@ It has two parts:
 
 ## Installation
 
-1. Create a database and table. You can find the SQL command in `migration/init.sql`
-1. Change connection details. MySQL port, user, password details are in ServicePollerRestControllerVerticle.java
+1. You should create a MySQL/MariaDb database and table. You can find the SQL command in `migration/init.sql`
+1. You can change the DB connection details. MySQL port, user, password details are in ServicePollerRestControllerVerticle.java
 
 `   private static final Integer MYSQL_PORT = 3306;
 
@@ -22,6 +22,8 @@ It has two parts:
     private static final String MYSQL_USER = "root";
 
     private static final String MYSQL_PASSWORD = "";`
+
+3. Now, you should to the frontend directory `src/services-crud` and run `npm install` and `npm run build` You can read the frontend parts its own Readme in this file: `src/frontend/services-crud/README.md`
 
 That's all now you can start `Starter.java` from IntelliJ. Right click on Starter.java and Run and open the UI in browser by this URL:
 
