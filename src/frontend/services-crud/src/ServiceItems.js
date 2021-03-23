@@ -101,12 +101,12 @@ class ServiceItems extends React.Component {
         console.log('this.selectedTitle in editItem', this.selectedTitle);
 
         if (this.selectedUrl === '' || !Utils.isValidURL(this.selectedUrl)) {
-            alert('Not valid or empty URL.')
+            alert('Not valid or empty URL.'); //@todo all alerts should be changed to Material dialog component.
             return;
         }
 
         if (this.selectedTitle === '') {
-            alert('Name is a required field.')
+            alert('Name is a required field.'); //@todo all alerts should be changed to Material dialog component.
             return;
         }
 
@@ -156,9 +156,9 @@ class ServiceItems extends React.Component {
             const response = await rawResponse.json();
 
             if (response.result === 'ok') {
-                document.getElementById(this.selectedId).remove();
+                document.getElementById(this.selectedId).remove(); //@todo this Vanillajs should be changed to React way.
             } else {
-                alert('Delete failed. Please, try it again.')
+                alert('Delete failed. Please, try it again.') //@todo all alerts should be changed to Material dialog component.
             }
 
             this.selectedId = null;
