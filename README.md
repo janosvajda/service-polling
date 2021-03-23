@@ -39,18 +39,18 @@ UI shows their statuses and allows all CRUD functionality.
 
 ### Basic requirements
 
-1. A user needs to be able to add a new service with URL, a name (yes)
-1. Added services have to be kept when the server is restarted (yes, all data is saved into MySQL)
+1. A user needs to be able to add a new service with URL, a name (**Yes**, I created a CRUD functionality.)
+1. Added services have to be kept when the server is restarted (**Yes**, all data is saved into MySQL)
 1. Present whenever a service was added and when the last change was
-   made (yes, DateTime values of created at and modified at are in MySQL table)
+   made (**Yes**, DateTime values of created at and modified at are in MySQL table)
 
 ### Extra requirements
 
-1. Full create/update/delete functionality for services (**yes**, CRUD functionally is done)
+1. Full create/update/delete functionality for services (**Yes**, CRUD functionally is done)
 1. The results from the poller are not automatically shown to the user
-   (you have to reload the page to see results) (**yes**, script reload the page in each 30 second and re-checks services)
+   (you have to reload the page to see results) (**Yes**, script reload the page in each 30 second and re-checks services)
 1. We want to have informative and nice looking animations on
-   add/remove services (**yes**, there is a basic animation on UI when data has been added/removed)
+   add/remove services (**Yes**, there is a basic animation on UI when data has been added/removed)
 1. Simultaneous writes sometimes causes strange behaviour (**Not fully**, This was a bigger problem If there would be used a file system but MySQL can handle this. Of course, there can be more layers for this but I did not add any extra load balancer etc.)
 1. Protect the poller from misbehaving services (for example answering
    really slowly) (**Yes**, I used for this WebClient and Future + Periodic)
