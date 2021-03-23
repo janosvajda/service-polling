@@ -4,7 +4,7 @@ Service polling app.
 
 The source code has two parts: 
 
-1. Front-end (React)
+1. Front-end (React). It has its own Readme: https://github.com/janosvajda/service-polling/blob/main/src/frontend/services-crud/README.md
 1. Back-end (Java, Vert.x, Gradle, MySQL)
 
 ## Installation
@@ -60,4 +60,4 @@ UI shows their statuses and allows all CRUD functionality.
    another user (**Nope**, I did not create user and session management.)
 
 ### Personal note
-:) This is was first Vert.x and React web project in my life as I had never used them before. I really enjoyed working with Vert.x and I was amazed at how effective and quick it is.
+This was first Vert.x and React web project in my life as I had never used them before. I really enjoyed working with Vert.x and I was amazed at how effective and quick it is.
