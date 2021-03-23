@@ -1,6 +1,10 @@
 ## Available Scripts
 
-In the project directory, you can run:
+If you work on the service pooler script's frontend then you should go its project directory. You can find it in `src/frontend/services-crud` directory inside of the project.
+
+This is a React app. All its vendors is in packgage.json. It deploys itself automatically. You can the details in the description of `build` command at very bottom in this Readme.
+
+**In the project directory, you can run these commands:**
 
 ### `npm start`
 
@@ -24,4 +28,4 @@ It correctly bundles React in production mode and optimizes the build for the be
 The build is minified and the filenames include the hashes.
 Your app is ready to be deployed!
 
-It also copy the production build frontend app to Vert.x's webroot directory and it replaces the old version of the app.
+It also copies the production build frontend app to Vert.x's webroot directory and it replaces the old version of the app.
